@@ -11,7 +11,7 @@ import { Footer } from "../components/Footer";
 export const Home = () => {
   return <div className="min-h-dvh gradient-bg text-foreground overflow-x-hidden">
     { /* Theme Toggle */}
-    <ThemeToggle />
+
 
     { /* Background Effects */}
     <CloudBackground />

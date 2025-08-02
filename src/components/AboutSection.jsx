@@ -20,7 +20,7 @@ export const AboutSection = () => {
         };
 
         return (
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-wrap items-center justify-between mb-3">
                 <span className="text-sm font-press text-foreground min-w-[120px]">
                     {skill}
                 </span>

@@ -47,7 +47,7 @@ export const ContactSection = () => {
     };
 
     return (
-        <section id="contact" className="min-dvh pt-24 pb-8 px-4 relative">
+        <section id="contact" className="min-h-dvh pt-24 pb-8 px-4 relative">
             <div className="container mx-auto max-w-5xl">
                 <h2 className="text-primary drop-shadow-custom-dark text-3xl md:text-4xl font-press font-bold text-center mb-8">
                     Talk with Emily?

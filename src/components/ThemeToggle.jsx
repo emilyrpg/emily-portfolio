@@ -30,7 +30,7 @@ const MoonIcon = ({ className }) => (
   </svg>
 );
 
-export const ThemeToggle = () => {
+export const ThemeToggle = ({ inline = false }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
@@ -52,13 +52,14 @@ export const ThemeToggle = () => {
     };
 
     return (
-        <button 
-            onClick={toggleTheme} 
+            <button
+            onClick={toggleTheme}
             className={cn(
-                "fixed max-sm:hidden top-5 right-5 z-50 p-3 rounded-full",  
+                inline ? "md:fixed md:top-3 md:right-3" : "relative",
+                "p-2 rounded-full",
                 "transition-colors duration-300 hover:text-gray-400",
                 "text-white dark:text-gray-800 dark:hover:text-gray-600",
-                "bg-transparent p-0 m-0 border-none outline-none",
+                "bg-transparent border-none outline-none",
                 "group"
             )}
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
@@ -67,7 +68,7 @@ export const ThemeToggle = () => {
                 {/* Sun Icon */}
                 <SunIcon 
                     className={cn(
-                        "absolute inset-0 w-6 h-6 transition-all duration-500 ease-in-out text-yellow-400",
+                        "absolute inset-0 w-6 h-6 transition-all duration-500 ease-in-out text-yellow-300",
                         isDarkMode 
                             ? "opacity-100 rotate-0 scale-100" 
                             : "opacity-0 rotate-180 scale-75",

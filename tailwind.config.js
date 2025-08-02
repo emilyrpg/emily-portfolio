@@ -7,6 +7,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      minHeight: {
+        'dvh': '100dvh',
+      },
       fontFamily: {
         press: ['"Press Start 2P"', 'cursive'],
         nunito: ['Nunito', 'sans-serif'],
