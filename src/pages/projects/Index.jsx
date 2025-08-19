@@ -1,9 +1,185 @@
+import { Link } from "react-router-dom";
+import { SiteChrome } from "@/components/SiteChrome";
+import * as Lucide from "lucide-react";
+
+// Projects index page
 export const Index = () => {
+  // 🔧 Source of truth for your menu
+  const projects = [
+    {
+      href: "https://goshippo.com/blog/shippo-ships-it-tracking-shipments-and-spend-analytics",
+      title: "Shippo Ships It",
+      subtitle: "Blog · Long-form Content · Storytelling",
+      iconName: "FileEdit",
+      tags: ["Long-form copywriting", "2025"],
+      external: true
+    },
+      {
+    href: "https://www.centralcomputer.com/blog/post/AMD-Launches-Ryzen-Threadripper-9000",
+    title: "Ryzen Threadripper 9000 Series",
+    subtitle: "Technical Writing · SEO",
+    iconName: "Pencil",
+    tags: ["Automation", "NLP", "2025"],
+    external: true
+  },
+  /*
+  {
+    href: "/projects/multi-channel-campaign",
+    title: "Multi-Channel Campaign",
+    subtitle: "Email · Social · Landing page signups",
+    thumb: "/thumbs/multi-channel.png",
+    tags: ["Growth", "Engagement", "500+ Signups"],
+  },
+  {
+    href: "/projects/seo-site-restructure",
+    title: "SEO Site Restructure",
+    subtitle: "Consolidated 100+ pages for UX & rankings",
+    thumb: "/thumbs/seo-restructure.png",
+    tags: ["SEO", "UX", "2024"],
+  },
+    {
+    href: "/projects/seo-site-restructure",
+    title: "SEO Site Restructure",
+    subtitle: "Consolidated 100+ pages for UX & rankings",
+    thumb: "/thumbs/seo-restructure.png",
+    tags: ["SEO", "UX", "2024"],
+  },
+  {
+    href: "/projects/email-ab-test",
+    title: "Email A/B Test for Events",
+    subtitle: "Boosted open rate & engagement",
+    thumb: "/thumbs/email-test.png",
+    tags: ["Email", "Experimentation", "Engagement"],
+  },
+    // { href: "/projects/ai-keyword-briefs", title: "...", subtitle: "...", thumb: "/thumbs/ai-briefs.png", tags: ["Automation","NLP","2025"] },
+    // Add more…
+    */
+  ];
+
+  const handleBack = () => {
+    if (window.history.length > 1) window.history.back();
+    else window.location.href = "/";
+  };
+
+  function ThumbOrIconName({ thumb, iconName, title }) {
+    const Icon = iconName ? Lucide[iconName] : null;
+    if (Icon) {
+      return (
+        <div className="h-24 w-24 sm:h-24 sm:w-32 flex items-center justify-center rounded-xl border border-border bg-background">
+          <Icon className="h-24 w-24 text-primary" aria-hidden="true" />
+        </div>
+      );
+    }
+    return (
+      <img
+        src={thumb}
+        alt={`Thumbnail for ${title}`}
+        loading="lazy"
+        className="h-20 w-24 sm:h-24 sm:w-32 object-cover rounded-xl border border-border bg-background"
+      />
+    );
+  }
+
   return (
-    <div className="min-h-screen gradient-bg text-foreground overflow-x-hidden">
-      <h1 className="font-press text-3xl font-bold text-center mt-12">Projects</h1>
-      <p className="font-vt text-center mt-4">Danger! Page under construction. Please turn back.</p>
-      {/* Additional content for the projects index can be added here */}
-    </div>
+    <SiteChrome>
+      <section id="projects-index" className="min-h-dvh py-24 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <h1 className="opacity-0 animate-fade-in animate-fade-in-delay-1 font-press text-3xl md:text-4xl font-bold text-center text-primary drop-shadow-custom-dark">
+            Projects
+          </h1>
+
+          {/* Content container */}
+          <div className="container mt-8">
+            {/* Projects Menu Pane (scrolls inside) */}
+            <section
+              className="opacity-0 animate-fade-in animate-fade-in-delay-1 mx-auto max-w-4xl rounded-2xl border-4 border-border bg-card 
+              shadow-xl overflow-hidden"
+              aria-labelledby="projects-title"
+            >
+              <h2 id="projects-title" className="sr-only">Projects Index</h2>
+
+              <div
+                className="max-h-[70vh] overflow-y-auto overscroll-contain"
+                role="listbox"
+                aria-label="Project list"
+              >
+                <ul className="divide-y divide-border">
+                  {projects.map((p, i) => (
+                    <li key={p.href}>
+                      {p.external ? (
+                        <a
+                          href={p.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group grid grid-cols-[1fr,96px] sm:grid-cols-[1fr,128px] 
+                                    items-center gap-4 sm:gap-6 px-4 sm:px-6 py-4 
+                                    hover:bg-primary/10 focus:outline-none 
+                                    focus-visible:ring-2 focus-visible:ring-zinc-400 block
+                                    transition-transform duration-300 hover:scale-[1.02]"
+                          role="option"
+                        >
+                          <div className="font-press min-w-0 text-left">
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-xl font-black">{i + 1}.</span>
+                              <h3 className="text-xl font-black">{p.title}</h3>
+                            </div>
+                            <p className="font-vt mt-1 text-2xl text-zinc-600 ml-[calc(4ch+0.5rem)]">{p.subtitle}</p>
+                          </div>
+                          <div className="justify-self-end">
+                            <ThumbOrIconName {...p} />
+                          </div>
+                        </a>
+                      ) : (
+                        <Link
+                          to={p.href}
+                          className="group grid grid-cols-[1fr,96px] sm:grid-cols-[1fr,128px] 
+                                    items-center gap-4 sm:gap-6 px-4 sm:px-6 py-4 
+                                    hover:bg-primary/10 focus:outline-none 
+                                    focus-visible:ring-2 focus-visible:ring-zinc-400 block
+                                    transition-transform duration-300 hover:scale-[1.02]"
+                          role="option"
+                        >
+                          <div className="font-press min-w-0 text-left">
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-xl font-black">{i + 1}.</span>
+                              <h3 className="text-xl font-black">{p.title}</h3>
+                            </div>
+                            <p className="font-vt mt-1 text-2xl text-zinc-600 ml-[calc(4ch+0.5rem)]">{p.subtitle}</p>
+                          </div>
+                          <div className="justify-self-end">
+                            <ThumbOrIconName {...p} />
+                          </div>
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            {/* Back button OUTSIDE the pane (bottom-right) */}
+            <div className="opacity-0 animate-fade-in animate-fade-in-delay-1 mx-auto max-w-4xl flex justify-end mt-2">
+              <button
+                onClick={handleBack}
+                className="inline-flex items-center gap-2 rounded-lg border-4 border-border bg-card px-4 py-2 text-sm font-press hover:shadow-[0_0_10px_rgba(255,190,140,0.9)] focus:outline-none focus:ring-2 
+                          focus:ring-primary transition-transform transition-all duration-300 hover:scale-105"
+                aria-label="Go back"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </SiteChrome>
   );
-}
+};

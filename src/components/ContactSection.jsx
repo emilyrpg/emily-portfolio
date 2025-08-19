@@ -77,7 +77,7 @@ export const ContactSection = () => {
                                     </h4>
                                     <a href="mailto: hello@gmail.com" 
                                     className="font-press text-xs text-muted-foreground hover:text-primary transition-colors">
-                                        hello@gmail.com
+                                        emilyros117@gmail.com
                                     </a>
                                 </div>
                             </div>
@@ -104,10 +104,18 @@ export const ContactSection = () => {
                         <div className="pt-8">
                             <h4 className="font-press text-xs mb-4"> Send a Friend Request</h4>
                             <div className="flex space-x-4 justify-center">
-                                <a href="#" target="_blank">
+                                <a 
+                                    href="https://www.linkedin.com/in/emilyros117/" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
                                     <Linkedin />
                                 </a>
-                                <a href="#" target="_blank">
+                                <a 
+                                    href="https://www.twitch.tv/eggyems" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
                                     <Twitch />
                                 </a>
                             </div>

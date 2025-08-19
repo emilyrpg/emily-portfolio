@@ -51,9 +51,9 @@
     @apply border-0;
   }
 
-  html {
-    @apply scroll-smooth;
-  }
+@layer base {
+  html { scroll-behavior: auto; }      /* opt-in */
+}
 
   body {
     @apply text-foreground transition-colors duration-300;

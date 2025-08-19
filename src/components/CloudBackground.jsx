@@ -73,7 +73,7 @@ export const CloudBackground = () => {
             ))}
             
             {/* CSS for the animation */}
-            <style jsx>{`
+            <style>{`
                 @keyframes float-horizontal {
                     from {
                         transform: translateX(-100px) scale(var(--scale));

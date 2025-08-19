@@ -79,6 +79,11 @@ export const AboutSection = () => {
                             </p>
 
                             <p>
+                                Alongside her analytical skills, she is building a strong foundation in data engineering fundamentals to ensure reliable, clean,
+                                and scalable data infrastructure.                  
+                            </p>
+
+                            <p>
                                 Currently, she&apos;s a Marketing Ops Analyst at Central Computers, focused on process optimization and analytics.
                             </p>
 
@@ -93,7 +98,10 @@ export const AboutSection = () => {
                                 Press to Talk
                             </a>
 
-                            <a href="" className={cn(
+                            <a 
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://drive.google.com/file/d/1lqdgaBVtRuGGT6dZtU5PYsrQtlNP1MvO/view?usp=sharing" className={cn(
                                     "px-6 py-2 rounded-full border border-primary text-white font-press text-xs",
                                     "transition-all duration-200 hover:shadow-[0_0_10px_rgba(255,190,140,0.9)]",
                                     "hover:scale-105 active:scale-95 origin-center"

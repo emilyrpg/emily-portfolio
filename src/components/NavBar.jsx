@@ -1,15 +1,15 @@
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 
 const navItems = [
     // Each section is engulfed by a div with an id that matches the href
-    {name: "Home", href: "#home"},
-    {name: "About", href: "#about"},
-    {name: "Projects", href: "#projects"},
-    {name: "Contact", href: "#contact"},
+    {name: "Home", to: "/#home"},
+    {name: "About", to: "/#about"},
+    {name: "Projects", to: "/#projects"},
+    {name: "Contact", to: "/#contact"},
 ]
 
 export const NavBar = () => {
@@ -133,13 +133,15 @@ export const NavBar = () => {
                     </a>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex space-x-8 pr-8">
+                    <div className="hidden md:flex space-x-8">
                         {navItems.map((item, key) => (
-                            <a key={key} href={item.href} className="font-press text-primary hover:text-gray-400 transition-colors duration-300">
+                            <NavLink key={key} to={item.to} className="font-press text-primary hover:text-gray-400 transition-colors duration-300">
                                 {item.name}
-                            </a>
+                            </NavLink>
                         ))}
-                        <ThemeToggle inline={true} />
+                        <div>
+                            <ThemeToggle inline={true} />
+                        </div>
                     </div>
 
                     {/* Mobile Navigation */}
@@ -174,11 +176,11 @@ export const NavBar = () => {
 
                 <div className="flex flex-col space-y-8 text-xl">
                     {navItems.map((item, key) => (
-                        <a key={key} href={item.href} className="font-press text-white/80 hover:text-white transition-colors duration-300"
+                        <NavLink key={key} to={item.to} className="font-press text-white/80 hover:text-white transition-colors duration-300"
                         onClick={() => setIsMenuOpen(false)}
                     >
                             {item.name}
-                        </a>
+                        </NavLink>
                     ))}
                 </div>
             </div>
