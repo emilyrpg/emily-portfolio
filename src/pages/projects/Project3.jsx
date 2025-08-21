@@ -27,7 +27,7 @@ export const Project3 = () => {
       return;
     }
 
-    if (from === "home-projects") {
+    if (from === "projects") {
       // Send back to the Projects section on homepage
       navigate("/#projects");
       return;
