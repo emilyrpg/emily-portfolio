@@ -34,26 +34,47 @@ const MoonIcon = ({ className }) => (
 export const ThemeToggle = ({ inline = false }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    useEffect(() => {
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === "dark") {
-            setIsDarkMode(true);
-            document.documentElement.classList.toggle('dark', true);
-        } else {
-        // No stored preference → check time
-        const hour = new Date().getHours();
-        const dark = hour < 7 || hour >= 19; // Night hours
+    // Remote control for theme
+    const applyTheme = (value) => {
+        const dark = value === "dark";
         setIsDarkMode(dark);
-        document.documentElement.classList.toggle('dark', dark);
-        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        document.documentElement.classList.toggle("dark", dark);
+    };
+
+    useEffect(() => {
+        const stored = localStorage.getItem("theme");
+
+        if (stored === "dark" || stored === "light") {
+        // Respect the stored choice
+        applyTheme(stored);
+        } else {
+            // No stored choice → pick default (time-based or prefers-color-scheme)
+            const hour = new Date().getHours();
+            const timeBasedDark = hour < 7 || hour >= 19;
+
+            // Optional: use system preference as a tie-breaker
+            const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+            const defaultDark = typeof prefersDark === "boolean" ? prefersDark : timeBasedDark;
+
+            const initial = defaultDark ? "dark" : "light";
+            localStorage.setItem("theme", initial);
+            applyTheme(initial);
         }
+
+        // Keep multiple tabs in sync
+        const onStorage = (e) => {
+        if (e.key === "theme" && (e.newValue === "dark" || e.newValue === "light")) {
+            applyTheme(e.newValue);
+            }
+        };
+        window.addEventListener("storage", onStorage);
+        return () => window.removeEventListener("storage", onStorage);
     }, []);
 
     const toggleTheme = () => {
-        const newTheme = !isDarkMode;
-        setIsDarkMode(newTheme);
-        document.documentElement.classList.toggle('dark', newTheme);
-        localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+        const next = isDarkMode ? "light" : "dark";
+        localStorage.setItem("theme", next);
+        applyTheme(next);
     };
 
     return (
