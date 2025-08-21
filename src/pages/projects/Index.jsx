@@ -1,49 +1,49 @@
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { SiteChrome } from "@/components/SiteChrome";
 import * as Lucide from "lucide-react";
 
 // Projects index page
 export const Index = () => {
-  // 🔧 Source of truth for your menu
   const projects = [
+    {
+      href: "https://github.com/emilyrpg/nyc-shooting-analysis",
+      title: "NYC Incident Analysis",
+      subtitle: "Python · scikit-learn · Pandas",
+      thumb: "/assets/Apple.png",
+      tags: ["Growth", "Engagement", "500+ Signups"],
+      external: true
+    },
+    {
+      href: "/projects/Project2",
+      title: "Netflix Database Design",
+      subtitle: "Created EER diagrams and logical database designs",
+      thumb: "/assets/TV.png",
+      tags: ["Python", "Data Wrangling", "2025"],
+    },
+    {
+      href: "/projects/Project3",
+      title: "General Motors Case Study",
+      subtitle: "Identified a digital transformation to drive business value",
+      thumb: "/assets/Car.png",
+      tags: ["SEO", "UX", "2024"],
+    },
     {
       href: "https://goshippo.com/blog/shippo-ships-it-tracking-shipments-and-spend-analytics",
       title: "Shippo Ships It",
       subtitle: "Blog · Long-form Content · Storytelling",
-      iconName: "FileEdit",
+      thumb: "/assets/Mailbox.png",
       tags: ["Long-form copywriting", "2025"],
       external: true
     },
-      {
-    href: "https://www.centralcomputer.com/blog/post/AMD-Launches-Ryzen-Threadripper-9000",
-    title: "Ryzen Threadripper 9000 Series",
-    subtitle: "Technical Writing · SEO",
-    iconName: "Pencil",
-    tags: ["Automation", "NLP", "2025"],
-    external: true
-  },
-  /*
-  {
-    href: "/projects/multi-channel-campaign",
-    title: "Multi-Channel Campaign",
-    subtitle: "Email · Social · Landing page signups",
-    thumb: "/thumbs/multi-channel.png",
-    tags: ["Growth", "Engagement", "500+ Signups"],
-  },
-  {
-    href: "/projects/seo-site-restructure",
-    title: "SEO Site Restructure",
-    subtitle: "Consolidated 100+ pages for UX & rankings",
-    thumb: "/thumbs/seo-restructure.png",
-    tags: ["SEO", "UX", "2024"],
-  },
     {
-    href: "/projects/seo-site-restructure",
-    title: "SEO Site Restructure",
-    subtitle: "Consolidated 100+ pages for UX & rankings",
-    thumb: "/thumbs/seo-restructure.png",
-    tags: ["SEO", "UX", "2024"],
-  },
+      href: "https://www.centralcomputer.com/blog/post/AMD-Launches-Ryzen-Threadripper-9000",
+      title: "Ryzen Threadripper 9000 Series",
+      subtitle: "Technical Writing · SEO",
+      thumb: "/assets/Cpu.png",
+      tags: ["Automation", "NLP", "2025"],
+      external: true
+    },
+  /*
   {
     href: "/projects/email-ab-test",
     title: "Email A/B Test for Events",
@@ -56,16 +56,17 @@ export const Index = () => {
     */
   ];
 
+  const navigate = useNavigate();
+
   const handleBack = () => {
-    if (window.history.length > 1) window.history.back();
-    else window.location.href = "/";
+    navigate("/#projects");
   };
 
   function ThumbOrIconName({ thumb, iconName, title }) {
     const Icon = iconName ? Lucide[iconName] : null;
     if (Icon) {
       return (
-        <div className="h-24 w-24 sm:h-24 sm:w-32 flex items-center justify-center rounded-xl border border-border bg-background">
+        <div className="h-24 w-24 sm:h-24 sm:w-32 flex items-center justify-center">
           <Icon className="h-24 w-24 text-primary" aria-hidden="true" />
         </div>
       );
@@ -75,7 +76,7 @@ export const Index = () => {
         src={thumb}
         alt={`Thumbnail for ${title}`}
         loading="lazy"
-        className="h-20 w-24 sm:h-24 sm:w-32 object-cover rounded-xl border border-border bg-background"
+        className="h-20 w-24 sm:h-24 sm:w-32 object-cover"
       />
     );
   }
@@ -132,6 +133,7 @@ export const Index = () => {
                       ) : (
                         <Link
                           to={p.href}
+                          state={{ from: "projects-index" }}
                           className="group grid grid-cols-[1fr,96px] sm:grid-cols-[1fr,128px] 
                                     items-center gap-4 sm:gap-6 px-4 sm:px-6 py-4 
                                     hover:bg-primary/10 focus:outline-none 
@@ -161,8 +163,8 @@ export const Index = () => {
             <div className="opacity-0 animate-fade-in animate-fade-in-delay-1 mx-auto max-w-4xl flex justify-end mt-2">
               <button
                 onClick={handleBack}
-                className="inline-flex items-center gap-2 rounded-lg border-4 border-border bg-card px-4 py-2 text-sm font-press hover:shadow-[0_0_10px_rgba(255,190,140,0.9)] focus:outline-none focus:ring-2 
-                          focus:ring-primary transition-transform transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-lg border-4 border-border bg-card px-4 py-2 text-sm font-press hover:shadow-[0_0_10px_rgba(255,190,140,0.9)] 
+                           focus:outline-none focus:ring-2 transition-transform transition-all duration-300 hover:scale-105"
                 aria-label="Go back"
               >
                 <svg

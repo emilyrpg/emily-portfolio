@@ -52,13 +52,14 @@
   }
 
 @layer base {
-  html { scroll-behavior: auto; }      /* opt-in */
+  html { scroll-behavior: auto; }
 }
 
   body {
     @apply text-foreground transition-colors duration-300;
     background: var(--gradient-bg);
     font-feature-settings: "rlig" 1, "calt" 1;
+    overscroll-behavior: none;
   }
 
   #root {

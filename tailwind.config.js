@@ -11,7 +11,7 @@ module.exports = {
         'dvh': '100dvh',
       },
       fontFamily: {
-        press: ['"Press Start 2P"', 'cursive'],
+        press: ['"Press Start 2P"', 'sans-serif'],
         nunito: ['Nunito', 'sans-serif'],
         vt: ['VT323', 'monospace'],
       },

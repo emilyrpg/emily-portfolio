@@ -26,7 +26,7 @@ const projects = [
         title: "General Motors Case Study",
         description: "",
         image: "/projects/Project3.png",
-        tags: ["Digital Transformation", "Business Value"],
+        tags: ["Digital Transformation"],
         link: "/projects/Project3"
     }
 ]
@@ -70,7 +70,7 @@ export const ProjectSection = () => {
                             );
                         }
                         return (
-                            <Link key={key} to={project.link} className="group gradient-bg rounded-lg overflow-hidden shadow-xs card-hover">
+                            <Link key={key} to={project.link} state={{ from: "projects" }} className="group gradient-bg rounded-lg overflow-hidden shadow-xs card-hover">
                                 <div className="h-48 overflow-hidden">
                                     <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                                 </div>

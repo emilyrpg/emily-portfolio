@@ -1,14 +1,43 @@
 import { SiteChrome } from "@/components/SiteChrome";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 export const Project3 = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Persist the "from" info across refreshes (optional but nice)
+  const fromRef = useRef(location.state?.from);
+  useEffect(() => {
+    if (location.state?.from) {
+      sessionStorage.setItem("project3_from", location.state.from);
+      fromRef.current = location.state.from;
+    } else {
+      const saved = sessionStorage.getItem("project3_from");
+      if (saved) fromRef.current = saved;
+    }
+  }, [location.state?.from]);
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
+    const from = fromRef.current;
+
+    if (from === "projects-index") {
+      // Send back to the ProjectsIndex page
+      navigate("/projects-index");
+      return;
+    }
+
+    if (from === "home-projects") {
+      // Send back to the Projects section on homepage
       navigate("/#projects");
+      return;
+    }
+
+    // Fallbacks:
+    if (window.history.length > 1) {
+      navigate(-1);                // normal browser back
+    } else {
+      navigate("/#projects");      // hard fallback
     }
   };
 
@@ -16,7 +45,7 @@ export const Project3 = () => {
     <SiteChrome>
       <section
         id="project-2"
-        className="min-h-dvh py-24 px-4 text-foreground overflow-x-hidden"
+        className="opacity-0 animate-fade-in animate-fade-in-delay-1 min-h-dvh py-24 px-4 text-foreground overflow-x-hidden"
       >
         <div className="container mx-auto max-w-7xl">
           {/* Page Title */}
@@ -34,25 +63,26 @@ export const Project3 = () => {
             ></iframe>
           </div>
           {/* Back button (bottom-right) */}
-      <div className="mx-auto max-w-4xl flex justify-end mt-4">
-        <button
-          onClick={handleBack}
-          className="inline-flex items-center gap-2 rounded-lg border-4 border-border bg-card px-4 py-2 text-sm font-press hover:shadow-[0_0_10px_rgba(255,190,140,0.9)] focus:outline-none focus:ring-2 
-                     focus:ring-primary transition-transform duration-300 hover:scale-105"
-          aria-label="Go back"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7" />
-          </svg>
-          Back
-        </button>
-      </div>
+          <div className="mx-auto max-w-4xl flex justify-end mt-4">
+            <button
+              onClick={handleBack}
+              className="z-20 inline-flex items-center gap-2 rounded-lg border-4 
+                        border-border bg-card px-4 py-2 text-sm font-press hover:shadow-[0_0_10px_rgba(255,190,140,0.9)]
+                        transition-transform duration-300 hover:scale-105"
+              aria-label="Go back"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7" />
+              </svg>
+              Back
+            </button>
+          </div>
         </div>
       </section>
     </SiteChrome>
