@@ -31,49 +31,85 @@ const MoonIcon = ({ className }) => (
   </svg>
 );
 
+
 export const ThemeToggle = ({ inline = false }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     // Remote control for theme
-    const applyTheme = (value) => {
-        const dark = value === "dark";
+    const applyTheme = (dark) => {
         setIsDarkMode(dark);
         document.documentElement.classList.toggle("dark", dark);
     };
 
+    // Compute time-based theme (local TZ)
+    const isNightTime = () => {
+        const hour = new Date().getHours();
+        return hour < 7 || hour >= 19; // 7PM–6:59AM = dark
+    };
+
+    // Find ms until the next 7:00 boundary (local TZ)
+    const msUntilNextBoundary = () => {
+        const now = new Date();
+        const next = new Date(now);
+        const hour = now.getHours();
+        // next boundary is 07:00 if currently night, otherwise 19:00
+        const targetHour = (hour < 7 || hour >= 19) ? 7 : 19;
+        next.setHours(targetHour, 0, 0, 0);
+        if (next <= now) next.setDate(next.getDate() + 1);
+        return next.getTime() - now.getTime();
+    };
+
     useEffect(() => {
         const stored = localStorage.getItem("theme");
+        const hasUserPreference = stored=== "light" || stored === "dark";
 
-        if (stored === "dark" || stored === "light") {
-        // Respect the stored choice
-        applyTheme(stored);
+        // Apply initial theme
+        if (hasUserPreference) {
+            applyTheme(stored === "dark");
         } else {
-            // No stored choice → pick default (time-based or prefers-color-scheme)
-            const hour = new Date().getHours();
-            const timeBasedDark = hour < 7 || hour >= 19;
-
-            // Optional: use system preference as a tie-breaker
-            const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-            const defaultDark = typeof prefersDark === "boolean" ? prefersDark : timeBasedDark;
-
-            const initial = defaultDark ? "dark" : "light";
-            localStorage.setItem("theme", initial);
-            applyTheme(initial);
+            applyTheme(isNightTime());
         }
 
-        // Keep multiple tabs in sync
+        let timerId;
+
+        const scheduleSwitch = () => {
+            // Only set timer if there's NO user preference
+            if (localStorage.getItem("theme") == null) {
+                timerId = setTimeout(() => {
+                    // Double-check user hasn't set a preference since timer was set
+                    if (localStorage.getItem("theme") == null) {
+                        applyTheme(isNightTime());
+                        scheduleSwitch(); // Set next timer
+                    }
+                }, msUntilNextBoundary());
+            }
+        };
+        scheduleSwitch();
+
         const onStorage = (e) => {
-        if (e.key === "theme" && (e.newValue === "dark" || e.newValue === "light")) {
-            applyTheme(e.newValue);
+            if (e.key === "theme") {
+                if (e.newValue === "light") {
+                    applyTheme(false);
+                } else if (e.newValue === "dark") {
+                    applyTheme(true);
+                } else if (e.newValue == null) {
+                    // User cleared preference - return to time-based
+                    applyTheme(isNightTime());
+                    scheduleSwitch(); // Restart timer
+                }
             }
         };
         window.addEventListener("storage", onStorage);
-        return () => window.removeEventListener("storage", onStorage);
+
+        return () => {
+            clearTimeout(timerId);
+            window.removeEventListener("storage", onStorage);
+        };
     }, []);
 
     const toggleTheme = () => {
-        const next = isDarkMode ? "light" : "dark";
-        localStorage.setItem("theme", next);
+        const next = !isDarkMode;
+        localStorage.setItem("theme", next ? "dark" : "light");
         applyTheme(next);
     };
 

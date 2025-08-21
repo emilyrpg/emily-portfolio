@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { SiteChrome } from "@/components/SiteChrome";
 import * as Lucide from "lucide-react";
-
+//whats causing the window to scroll left and right
 // Projects index page
 export const Index = () => {
   const projects = [
@@ -100,7 +100,7 @@ export const Index = () => {
               <h2 id="projects-title" className="sr-only">Projects Index</h2>
 
               <div
-                className="max-h-[70vh] overflow-y-auto overscroll-contain"
+                className="max-h-[70vh] overflow-y-auto overflow-x-hidden overscroll-contain"
                 role="listbox"
                 aria-label="Project list"
               >
